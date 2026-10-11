@@ -74,7 +74,15 @@ class VideoWebviewWindowsImpl
       if (url.isEmpty) {
         return;
       }
-      unloadPage();
+      
+final uri = Uri.tryParse(url);
+if (uri != null &&
+    (uri.host == 'www.iyf.tv' || uri.host == 'iyf.tv') &&
+    uri.path == '/assets/javascript/empty2.mp4') {
+  logEventController.add('Ignored IYF placeholder video');
+  return;
+}
+unloadPage();
       isIframeLoaded = true;
       isVideoSourceLoaded = true;
       videoLoadingEventController.add(false);
